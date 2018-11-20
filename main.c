@@ -39,6 +39,26 @@ void getCreateParameters(char command[], int * n, char * fileName) {
     }
 }
 
+void getReadParameters(char command[], int * n, char * fileName) {
+    char commandToken[500];
+    size_t destination_size = sizeof (commandToken);
+
+    strncpy(commandToken, command, destination_size);
+
+    char * token;
+    token = strtok(commandToken, " ");
+    for(int i = 0; i < 3; i ++) {
+        if(token != NULL && strlen(token) > 0) {
+            if(i == 1) {
+                strcpy(fileName, token);
+            } else if(i == 2) {
+                token[strlen(token) - 1] = 0;
+                *n = *token - '0';
+            }
+            token = strtok(NULL, " ");
+        }
+    }
+
 void createFileMapping(char * filePath) {
 
 }
