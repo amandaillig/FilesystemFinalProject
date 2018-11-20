@@ -17,6 +17,19 @@ void getCommandType(char command[], char * commandType) {
     }
 }
 
+void fileCheck (char* fileName){
+    FILE *file;
+    if( file = fopen(filename, "r")){
+        printf("The file exists");
+        return 1;
+    }
+    else(return 0);
+}
+
+void overWrite(char command[]){
+
+
+}
 int main(int argc, char * argv[]) {
     printf("FileSystem Final Project\n");
     int stopLoop = 1;
