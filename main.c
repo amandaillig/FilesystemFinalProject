@@ -17,6 +17,7 @@ void getCommandType(char command[], char * commandType) {
     }
 }
 
+
 void getCreateParameters(char command[], int * n, char * fileName) {
     char commandToken[500];
     size_t destination_size = sizeof (commandToken);
@@ -75,6 +76,22 @@ void inputFileContents(int n, char * fileName) {
     createFileMapping(partitionFilePaths);
 }
 
+
+ int fileCheck (char* fileName){
+    FILE *file;
+    if( file = fopen(fileName, "r")){
+        printf("The file exists");
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+void overWrite(char command[]){
+
+
+}
 
 int main(int argc, char * argv[]) {
     printf("FileSystem Final Project\n");

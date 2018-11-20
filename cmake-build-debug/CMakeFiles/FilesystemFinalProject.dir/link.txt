@@ -1,0 +1,1 @@
+C:/cygwin64/bin/gcc.exe -g  -Wl,--enable-auto-import CMakeFiles/FilesystemFinalProject.dir/main.c.o  -o FilesystemFinalProject.exe -Wl,--out-implib,libFilesystemFinalProject.dll.a -Wl,--major-image-version,0,--minor-image-version,0 
