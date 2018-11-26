@@ -112,7 +112,6 @@ char * getFilePathFromMappingFile(char * fileName, int partitionNo, char * fileP
 void * createFile(void * command) {
     struct Command * currentCommand = (struct Command*) command;
 
-
     int  numOfPartitions = *currentCommand->partition;
     int  connectionToClient = *currentCommand->conToClient;
 
@@ -160,7 +159,7 @@ void * createFile(void * command) {
 
 void * readFile(void * command) {
     // We need to get the mapping file
-    // If command.partition == -1 then read the whole file
+    // If partitionNo == -1 then read the whole file
     // else, get filepath from getFilePathFromMappingFile and read from only one file
 
     struct Command * currentCommand = (struct Command*) command;
@@ -177,18 +176,28 @@ void * readFile(void * command) {
         // Read from file in only one partition
         getFilePathFromMappingFile(fileName, partitionNo, filePath);
     }
+    free(filePath);
 }
 
 // DELETE COMMAND
 
 void * deleteFile(void * command) {
+    // Use filename to find the mapping file
+    // Loop through directories in mapping file
+    // Delete the file in the filepath
+    // Once all files are deleted, delete the mapping file
     struct Command * currentCommand = (struct Command*) command;
 
     char * fileName = currentCommand->fileName;
     int * partitionNo = currentCommand->partition;
+
+    char * filePath = (char *) malloc(sizeof(char) * BUF_SIZE);
+
+
+    free(filePath);
 }
 
-void getCommandType(char receiveLine[], char commandType[], char * token, char fileName[]) {
+void tokenizeCommand(char receiveLine[], char commandType[], char * token, char fileName[], int * partitionNo) {
     // get the command type
     token = strtok(receiveLine, " ");
     if(token != NULL) {
@@ -199,6 +208,15 @@ void getCommandType(char receiveLine[], char commandType[], char * token, char f
     token = strtok(NULL, " ");
     if(token != NULL) {
         strcpy(fileName, token);
+    }
+
+    // Get Partitions
+    token = strtok(NULL, " ");
+    if(token != NULL) {
+        token[sizeof(token) - 1] = 0;
+        sscanf(token, "%d",partitionNo);
+    } else {
+        *partitionNo = -1;
     }
 }
 
@@ -265,31 +283,24 @@ void processInputFromClient(int connectionToClient) {
         char commandType[BUF_SIZE];
         char * token;
 
-        getCommandType(receiveLine, commandType, token, fileName);
+        tokenizeCommand(receiveLine, commandType, token, fileName, numOfPartitions);
+
+        struct Command command = {fileName, numOfPartitions, &connectionToClient };
 
         //CREATING
         if(strcmp(commandType, "create") == 0) {
 
-            // Get number of partitions
-            token = strtok(NULL, " ");
-            if(token != NULL) {
-                token[sizeof(token) - 1] = 0;
-                sscanf(token, "%d",numOfPartitions);
-            }
-            struct Command createCommand = {fileName, numOfPartitions, &connectionToClient };
-
             // Start create pthread
-            pthread_create(&commandThread, NULL, createFile, (void*) &createCommand);
+            pthread_create(&commandThread, NULL, createFile, (void*) &command);
             pthread_join(commandThread, NULL);
         }
 
         // READING
         else if(strcmp(commandType, "read") == 0) {
             // READ LOGIC
-            struct Command readCommand = {fileName, numOfPartitions, &connectionToClient };
 
             // Start read pthread
-            pthread_create(&commandThread, NULL, readFile, (void*) &readCommand);
+            pthread_create(&commandThread, NULL, readFile, (void*) &command);
             pthread_join(commandThread, NULL);
 
         }
@@ -297,10 +308,9 @@ void processInputFromClient(int connectionToClient) {
         // DELETING
         else if(strcmp(commandType, "delete") == 0) {
             // DELETE LOGIC
-            struct Command deleteCommand = {fileName, numOfPartitions, &connectionToClient };
 
             // Start delete pthread
-            pthread_create(&commandThread, NULL, deleteFile, (void*) &deleteCommand);
+            pthread_create(&commandThread, NULL, deleteFile, (void*) &command);
             pthread_join(commandThread, NULL);
         }
 
