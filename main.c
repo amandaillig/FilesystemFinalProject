@@ -136,7 +136,6 @@ void * createFile(void * command) {
         }
 
         // Write to file
-        // TODO: METHOD TO WRITE LINE IN FILE
         char * filePartitionPath = (char *) malloc(sizeof(char) * BUF_SIZE);
         getFilePathFromMappingFile(fileName, partitionCounter, filePartitionPath);
         filePartitionPath[strlen(filePartitionPath) - 2] = 0;
