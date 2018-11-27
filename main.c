@@ -29,7 +29,7 @@ void closeConnection() {
 typedef struct Command  {
     char * fileName;
     int * partition;
-    int * conToClient
+    int * conToClient;
 };
 
 int fileCheck (char* fileName){
@@ -47,10 +47,6 @@ void overWrite(char command[]){
 
 
 }
-
-
-
-
 
 // CREATE COMMAND
 
