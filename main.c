@@ -10,7 +10,7 @@
 #include <sys/types.h>
 #include <pthread.h>
 
-#define SERVER_PORT 2004 // CHANGE THIS!
+#define SERVER_PORT 2010 // CHANGE THIS!
 #define BUF_SIZE 256
 
 // We make this a global so that we can refer to it in our signal handler
@@ -26,27 +26,11 @@ void closeConnection() {
     exit(1);
 }
 
-typedef struct Command  {
+typedef struct Command {
     char * fileName;
     int * partition;
-    int * conToClient;
+    int conToClient;
 };
-
-int fileCheck (char* fileName){
-    FILE *file;
-    if(file = fopen(fileName, "r")){
-        printf("The file exists");
-        return 1;
-    }
-    else {
-        return 0;
-    }
-}
-
-void overWrite(char command[]){
-
-
-}
 
 // CREATE COMMAND
 
@@ -73,7 +57,7 @@ void createPartitionFoldersAndMappingFile(char fileName[], int numOfPartitions) 
     char * filePath;
 
     for(i = 1; i <= num; i++) {
-        char diskPath[BUF_SIZE] = "disk";
+        char diskPath[BUF_SIZE] = ".\\disk";
         snprintf(&diskPath[strlen(diskPath)],sizeof(i),"%d\\",i);
 
         int result = mkdir(diskPath, 0777);
@@ -82,11 +66,6 @@ void createPartitionFoldersAndMappingFile(char fileName[], int numOfPartitions) 
         filePath = strcat(diskPath, fileName);
         writeToFile(fileName, filePath);
     }
-}
-
-void addToMapper(int partitionCounter, char fileName[], char * filePath) {
-    //Find mapper using fileName
-    //Add contents of filepath to the file, using partitionCounter as a line
 }
 
 char * getFilePathFromMappingFile(char * fileName, int partitionNo, char * filePath) {
@@ -105,20 +84,19 @@ char * getFilePathFromMappingFile(char * fileName, int partitionNo, char * fileP
     return filePath;
 }
 
-void * createFile(void * command) {
-    struct Command * currentCommand = (struct Command*) command;
+int createFile(struct Command * command) {
+    struct Command * currentCommand = command;
 
     int  numOfPartitions = *currentCommand->partition;
-    int  connectionToClient = *currentCommand->conToClient;
+    int  connectionToClient = currentCommand->conToClient;
 
     char * fileName = currentCommand->fileName;
     char receiveLineContent[BUF_SIZE];
 
     createPartitionFoldersAndMappingFile(fileName, numOfPartitions);
 
-    int bytesReadFromClient = (int )malloc(sizeof(int));
-
      int partitionCounter = 1;
+     int bytesReadFromClient;
 
      char sendLine[BUF_SIZE];
 
@@ -146,18 +124,27 @@ void * createFile(void * command) {
         bzero(&receiveLineContent, sizeof(receiveLineContent));
     }
 
-    free(&bytesReadFromClient);
     bzero(&receiveLineContent, sizeof(receiveLineContent));
+
+    return 1;
 }
 
 // READ COMMAND
 
-void * readFile(void * command) {
+int ifFileExists(char * filePath) {
+    if(access( filePath, F_OK ) != -1) {
+        return 1;
+    } else {
+        return -1;
+    }
+}
+
+int readFile(struct Command * command) {
     // We need to get the mapping file
     // If partitionNo == -1 then read the whole file
     // else, get filepath from getFilePathFromMappingFile and read from only one file
 
-    struct Command * currentCommand = (struct Command*) command;
+    struct Command * currentCommand = command;
 
     char * fileName = currentCommand->fileName;
     int * partitionNo = currentCommand->partition;
@@ -169,27 +156,44 @@ void * readFile(void * command) {
         // Read whole file
     } else {
         // Read from file in only one partition
-        getFilePathFromMappingFile(fileName, partitionNo, filePath);
+        getFilePathFromMappingFile(fileName, *partitionNo, filePath);
     }
     free(filePath);
+
+    return 1;
 }
 
 // DELETE COMMAND
 
-void * deleteFile(void * command) {
+int deleteFile(struct Command * command) {
     // Use filename to find the mapping file
     // Loop through directories in mapping file
     // Delete the file in the filepath
     // Once all files are deleted, delete the mapping file
     struct Command * currentCommand = (struct Command*) command;
 
-    char * fileName = currentCommand->fileName;
+    char * fileName = currentCommand->fileName;  // filepath for mapping file
     int * partitionNo = currentCommand->partition;
 
-    char * filePath = (char *) malloc(sizeof(char) * BUF_SIZE);
+    fileName[strlen(fileName) - 1] = 0;
 
+    if(ifFileExists(fileName) == 1) {
+        char line[BUF_SIZE];
+        FILE * file = fopen(fileName, "r");
+        int i = 1;
 
-    free(filePath);
+        while(fgets(line, sizeof(line), file)) {
+            line[strlen(line) - 2] = 0;
+            remove(line);
+        }
+        remove(fileName);
+        fclose(file);
+
+        return 1;
+    } else {
+        return -1;
+    }
+
 }
 
 void tokenizeCommand(char receiveLine[], char commandType[], char * token, char fileName[], int * partitionNo) {
@@ -213,10 +217,110 @@ void tokenizeCommand(char receiveLine[], char commandType[], char * token, char 
     } else {
         *partitionNo = -1;
     }
+
+
 }
 
-int getConnectionToClient() {
-    int connectionToClient;
+// TODO: Need to run pthreads for these requests
+void * processInputFromClient(void * ctc) {
+
+    int bytesReadFromClient;
+
+    int connectionToClient = *(int *) ctc;
+
+    int stopConnection = 0;
+
+    // These are the buffers for sending data to the client and receiving
+    char sendLine[BUF_SIZE];
+    char receiveLine[BUF_SIZE];
+
+    char fileName[BUF_SIZE];
+    int numOfPartitions = 0;
+
+    snprintf(sendLine, sizeof(sendLine), "Input either Create, Read, or Delete Command.  Type 'exit' to leave server or 'stop server' to stop the server.\n");
+    write(connectionToClient, sendLine, strlen(sendLine));
+
+    // Get first command
+    if((bytesReadFromClient = read(connectionToClient, receiveLine, BUF_SIZE)) > 0) {
+
+        // Need to put a NULL string terminator at end
+        receiveLine[bytesReadFromClient] = 0;
+
+        // Show what client sent
+        printf("Received: %s\n", receiveLine);
+
+        if(strcmp(receiveLine, "stop server\n") == 0) {
+            snprintf(sendLine, sizeof(sendLine), "Stopping server...\n");
+            write(connectionToClient, sendLine, strlen(sendLine));
+            stopConnection = 1;
+            closeConnection();
+        } else if(strcmp(receiveLine, "exit\n") == 0) {
+            printf("Closing connection");
+            snprintf(sendLine, sizeof(sendLine), "Closing connection...\n");
+            write(connectionToClient, sendLine, strlen(sendLine));
+            stopConnection = 1;
+        }
+        else {
+            char commandType[BUF_SIZE];
+            char * token;
+
+            tokenizeCommand(receiveLine, commandType, token, fileName, &numOfPartitions);
+
+            struct Command command = {fileName, &numOfPartitions, connectionToClient };
+
+            //CREATING
+            if(strcmp(commandType, "create") == 0) {
+                if(createFile(&command) == 1){
+                    snprintf(sendLine, sizeof(sendLine), "Created file %s\n", command.fileName);
+                    write(connectionToClient, sendLine, strlen(sendLine));
+                } else {
+                    snprintf(sendLine, sizeof(sendLine), "Sorry, unable to create file: %s\n", command.fileName);
+                    write(connectionToClient, sendLine, strlen(sendLine));
+                }
+            }
+            // READING
+            else if(strcmp(commandType, "read") == 0) {
+                snprintf(sendLine, sizeof(sendLine), "-Reading File %s-\n", command.fileName);
+                write(connectionToClient, sendLine, strlen(sendLine));
+
+                if(readFile(&command) == 1) {
+                    snprintf(sendLine, sizeof(sendLine), "-End of File-\n");
+                    write(connectionToClient, sendLine, strlen(sendLine));
+                } else {
+                    snprintf(sendLine, sizeof(sendLine), "Sorry, unable to read file: %s\n", command.fileName);
+                    write(connectionToClient, sendLine, strlen(sendLine));
+                }
+            }
+
+            // DELETING
+            else if(strcmp(commandType, "delete") == 0) {
+                snprintf(sendLine, sizeof(sendLine), "Deleting file: %s\n", command.fileName);
+                write(connectionToClient, sendLine, strlen(sendLine));
+
+                if(deleteFile(&command) == 1){
+                    snprintf(sendLine, sizeof(sendLine), "Deleted file: %s successfully\n", command.fileName);
+                    write(connectionToClient, sendLine, strlen(sendLine));
+                } else {
+                    snprintf(sendLine, sizeof(sendLine), "Sorry, was unable to delete file: %s\n", command.fileName);
+                    write(connectionToClient, sendLine, strlen(sendLine));
+                }
+            }
+
+
+        }
+    }
+
+    if(stopConnection == 1) {
+        close(connectionToClient);
+    } else {
+        processInputFromClient(&connectionToClient);
+    }
+
+}
+
+void connectToClient() {
+
+    int connectionToClient = 0;
 
     // Create a server socket
     serverSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -242,83 +346,41 @@ int getConnectionToClient() {
 
     sigaction(SIGINT, &sigIntHandler, NULL);
 
-    // Listen and queue up to 10 connections
-    listen(serverSocket, 10);
 
-    connectionToClient = accept(serverSocket, (struct sockaddr *) NULL, NULL);
+    if(listen(serverSocket, 10) == 0) {
+        // Listen and queue up to 10 connections
+        int i = 0;
+        pthread_t processInputThread[10];
+        while(connectionToClient = accept(serverSocket, (struct sockaddr *) NULL, NULL)) {
+            int * clientPointer = &connectionToClient;
+            char sendLine[BUF_SIZE];
 
-    return connectionToClient;
-}
+            snprintf(sendLine, sizeof(sendLine), "Connected to Server on port: %d\n", SERVER_PORT);
+            write(connectionToClient, sendLine, strlen(sendLine));
 
-// TODO: Need to run pthreads for these requests
-void processInputFromClient(int connectionToClient) {
+            snprintf(sendLine, sizeof(sendLine), "Client ID: %d\n", connectionToClient);
+            write(connectionToClient, sendLine, strlen(sendLine));
 
-    int bytesReadFromClient;
+            printf("Connection to client %d started\n", connectionToClient);
 
-    // These are the buffers for sending data to the client and receiving
-    char sendLine[BUF_SIZE];
-    char receiveLine[BUF_SIZE];
+            if(pthread_create(&processInputThread[i++], NULL, processInputFromClient, (void*)clientPointer) != 0) {
+                printf("Failed to create thread");
+            }
 
-    char fileName[BUF_SIZE];
-    int * numOfPartitions = (int* )malloc(sizeof(int));
-
-    snprintf(sendLine, sizeof(sendLine), "Input either Create, Read, or Delete Command\n");
-    write(connectionToClient, sendLine, strlen(sendLine));
-
-    // Get first command
-    if((bytesReadFromClient = read(connectionToClient, receiveLine, BUF_SIZE)) > 0) {
-        pthread_t commandThread;
-
-        // Need to put a NULL string terminator at end
-        receiveLine[bytesReadFromClient] = 0;
-
-        // Show what client sent
-        printf("Received: %s\n", receiveLine);
-
-        char commandType[BUF_SIZE];
-        char * token;
-
-        tokenizeCommand(receiveLine, commandType, token, fileName, numOfPartitions);
-
-        struct Command command = {fileName, numOfPartitions, &connectionToClient };
-
-        //CREATING
-        if(strcmp(commandType, "create") == 0) {
-
-            // Start create pthread
-            pthread_create(&commandThread, NULL, createFile, (void*) &command);
-            pthread_join(commandThread, NULL);
+            if(i >= 10) {
+                i = 0;
+                while(i < 10) {
+                    pthread_join(processInputThread[i++], NULL);
+                }
+                i = 0;
+            }
         }
-
-        // READING
-        else if(strcmp(commandType, "read") == 0) {
-            // READ LOGIC
-
-            // Start read pthread
-            pthread_create(&commandThread, NULL, readFile, (void*) &command);
-            pthread_join(commandThread, NULL);
-
-        }
-
-        // DELETING
-        else if(strcmp(commandType, "delete") == 0) {
-            // DELETE LOGIC
-
-            // Start delete pthread
-            pthread_create(&commandThread, NULL, deleteFile, (void*) &command);
-            pthread_join(commandThread, NULL);
-        }
-
-        free(numOfPartitions);
     }
+
+
+    //closeConnection();
 }
 
 int main(int argc, char * argv[]) {
-    int connectionToClient;
-    connectionToClient = getConnectionToClient();
-
-    processInputFromClient(connectionToClient);
-
-    close(connectionToClient);
-    closeConnection();
+    connectToClient();
 }

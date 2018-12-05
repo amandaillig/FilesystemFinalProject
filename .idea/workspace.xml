@@ -13,6 +13,10 @@
   <component name="ChangeListManager">
     <list default="true" id="5e81bcc7-e8cb-47ca-a6e7-2aa2309ba6dc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/FilesystemFinalProject.dir/main.c.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/FilesystemFinalProject.dir/main.c.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/FilesystemFinalProject.exe" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/FilesystemFinalProject.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -27,41 +31,43 @@
     <session id="-431855848">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="14" />
+          <entry key="project.closed" value="19" />
           <entry key="project.open.time.1" value="2" />
           <entry key="project.open.time.11" value="1" />
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.16" value="1" />
-          <entry key="project.open.time.6" value="2" />
-          <entry key="project.open.time.7" value="6" />
-          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.6" value="3" />
+          <entry key="project.open.time.7" value="9" />
+          <entry key="project.open.time.8" value="3" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="16" />
+          <entry key="project.opened" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="FilesystemFinalProject (disassembly)" value="7" />
+          <entry key="FilesystemFinalProject (disassembly)" value="9" />
           <entry key="c" value="10" />
-          <entry key="cc" value="11" />
+          <entry key="cc" value="16" />
+          <entry key="txt" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Disassembly" value="7" />
-          <entry key="ObjectiveC" value="21" />
+          <entry key="Disassembly" value="9" />
+          <entry key="ObjectiveC" value="26" />
+          <entry key="PLAIN_TEXT" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="c" value="10805" />
-          <entry key="txt" value="701" />
+          <entry key="c" value="13205" />
+          <entry key="txt" value="728" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ObjectiveC" value="10805" />
-          <entry key="PLAIN_TEXT" value="701" />
+          <entry key="ObjectiveC" value="13205" />
+          <entry key="PLAIN_TEXT" value="728" />
         </counts>
       </usages-collector>
     </session>
@@ -71,17 +77,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="684">
-              <caret line="48" column="1" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../OS Examples/serverExample.c">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1368">
-              <caret line="76" column="12" selection-start-line="76" selection-start-column="12" selection-end-line="77" selection-end-column="66" />
+            <state relative-caret-position="621">
+              <caret line="372" column="55" selection-start-line="372" selection-start-column="55" selection-end-line="372" selection-end-column="55" />
+              <folding>
+                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#1909#3474#0" />
+                <element signature="e#3629#4321#0" />
+                <element signature="e#5213#5779#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -112,8 +115,8 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="width" value="1928" />
-    <option name="height" value="1044" />
+    <option name="width" value="1235" />
+    <option name="height" value="669" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -127,6 +130,11 @@
             <path>
               <item name="FilesystemFinalProject" type="b2602c69:ProjectViewProjectNode" />
               <item name="FilesystemFinalProject" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="FilesystemFinalProject" type="b2602c69:ProjectViewProjectNode" />
+              <item name="FilesystemFinalProject" type="462c0819:PsiDirectoryNode" />
+              <item name="cmake-build-debug" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -194,7 +202,12 @@
       <workItem from="1543030652670" duration="3930000" />
       <workItem from="1543195988381" duration="2168000" />
       <workItem from="1543341049179" duration="1152000" />
-      <workItem from="1543349326901" duration="1751000" />
+      <workItem from="1543349326901" duration="2427000" />
+      <workItem from="1543458832171" duration="839000" />
+      <workItem from="1543468572962" duration="1405000" />
+      <workItem from="1543984031596" duration="4405000" />
+      <workItem from="1543988591483" duration="5908000" />
+      <workItem from="1544036373281" duration="6000" />
     </task>
     <task id="LOCAL-00001" summary="Made a function to get parameters from create command&#10;Started making a couple functions to get file contents input from the user, write these lines to the file in the corresponding partition, and return these filepaths to the createFileMapper function">
       <created>1541989797964</created>
@@ -217,28 +230,35 @@
       <option name="project" value="LOCAL" />
       <updated>1543199799901</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Pushing for the heck of it">
+      <created>1543352511302</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1543352511302</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="60066000" />
+    <option name="totallyTimeSpent" value="73305000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.111409396" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17583893" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32907802" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.25531915" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.2444934" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.19414316" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.27548808" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Messages" order="8" weight="0.32765958" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.3275488" />
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="11" show_stripe_button="false" />
@@ -259,7 +279,8 @@
     <MESSAGE value="Made a function to get parameters from create command&#10;Started making a couple functions to get file contents input from the user, write these lines to the file in the corresponding partition, and return these filepaths to the createFileMapper function" />
     <MESSAGE value="Added some small things" />
     <MESSAGE value="Added some more small things" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added some more small things" />
+    <MESSAGE value="Pushing for the heck of it" />
+    <option name="LAST_COMMIT_MESSAGE" value="Pushing for the heck of it" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://C:/cygwin64/usr/src/debug/cygwin-2.11.1-1/winsup/cygwin/thread.cc">
@@ -304,13 +325,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/cygwin64/usr/src/debug/cygwin-2.11.1-1/winsup/cygwin/fhandler_console.cc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44489">
-          <caret line="2617" selection-start-line="2617" selection-end-line="2617" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -322,13 +336,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
           <caret line="17" column="19" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/cygwin64/usr/src/debug/cygwin-2.11.1-1/winsup/cygwin/pthread.cc">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="21" selection-start-line="21" selection-end-line="21" />
         </state>
       </provider>
     </entry>
@@ -346,10 +353,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.c">
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/test.txt" />
+    <entry file="file://$PROJECT_DIR$/cmake-build-debug/disk4/test.txt" />
+    <entry file="file://C:/cygwin64/usr/src/debug/cygwin-2.11.1-1/winsup/cygwin/pthread.cc">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="684">
-          <caret line="48" column="1" selection-start-line="48" selection-start-column="1" selection-end-line="48" selection-end-column="1" />
+        <state relative-caret-position="268">
+          <caret line="17" column="35" lean-forward="true" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
         </state>
       </provider>
     </entry>
@@ -357,6 +366,33 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1368">
           <caret line="76" column="12" selection-start-line="76" selection-start-column="12" selection-end-line="77" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/cygwin64/usr/src/debug/cygwin-2.11.1-1/winsup/cygwin/fhandler_socket_inet.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="449" selection-start-line="449" selection-end-line="449" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/cygwin64/usr/src/debug/cygwin-2.11.1-1/winsup/cygwin/fhandler_console.cc">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="422">
+          <caret line="2617" selection-start-line="2617" selection-end-line="2617" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="372" column="55" selection-start-line="372" selection-start-column="55" selection-end-line="372" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#1909#3474#0" />
+            <element signature="e#3629#4321#0" />
+            <element signature="e#5213#5779#0" />
+          </folding>
         </state>
       </provider>
     </entry>
