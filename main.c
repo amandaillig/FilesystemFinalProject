@@ -186,8 +186,8 @@ int deleteFile(struct Command * command) {
             line[strlen(line) - 2] = 0;
             remove(line);
         }
-        remove(fileName);
         fclose(file);
+        remove(fileName);
 
         return 1;
     } else {
