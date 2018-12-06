@@ -1,3 +1,0 @@
-./disk1/mandark.txt
-./disk2/mandark.txt
-./disk3/mandark.txt

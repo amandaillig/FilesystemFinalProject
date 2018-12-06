@@ -10,7 +10,7 @@
 #include <sys/types.h>
 #include <pthread.h>
 
-#define SERVER_PORT 2010 // CHANGE THIS!
+#define SERVER_PORT 1999 // CHANGE THIS!
 #define BUF_SIZE 256
 
 // We make this a global so that we can refer to it in our signal handler
@@ -95,10 +95,10 @@ int createFile(struct Command * command) {
 
     createPartitionFoldersAndMappingFile(fileName, numOfPartitions);
 
-     int partitionCounter = 1;
-     int bytesReadFromClient;
+    int partitionCounter = 1;
+    int bytesReadFromClient;
 
-     char sendLine[BUF_SIZE];
+    char sendLine[BUF_SIZE];
 
     snprintf(sendLine, sizeof(sendLine), "Input file contents.  End Input with an empty line\n");
     write(connectionToClient, sendLine, strlen(sendLine));
@@ -140,7 +140,6 @@ int ifFileExists(char * filePath) {
 }
 int countLinesInFile (char * fileName){
     char line[BUF_SIZE];
-    fileName[strlen(fileName)-1]=0;
     FILE * file = fopen(fileName, "r");
     int i = 0;
 
@@ -163,27 +162,38 @@ int readFile(struct Command * command) {
     int partitionCounter = 1;
     char line[BUF_SIZE];
 
-    if(ifFileExists(fileName)) {
+    if(*partitionNo == -1) {
+        fileName[strlen(fileName)-1]=0;
+    }
+
+    if(ifFileExists(fileName) == 1) {
         char filePath[BUF_SIZE];
         char sendLine[BUF_SIZE];
         if (*partitionNo == -1) {
             // Read whole file
             int noOfLines = countLinesInFile(fileName);
             int lineCounter = 0;
-            int readingFile = 0;
-            while(readingFile != 1){
+            int doneReadingFile = 0;
+            while(doneReadingFile != 1){
                 for(int i =1;i<noOfLines+1;i++){
                     getFilePathFromMappingFile(fileName, i, filePath);
                     filePath[strlen(filePath) - 2] = 0;
-                    FILE * file = fopen(filePath, "r");
-                   for(int j=0;j<lineCounter+1;j++){
-                       if(!fgets(line,sizeof(line),file)){
-                           readingFile =1;
-                       }
-                   }
-                    snprintf(sendLine, sizeof(sendLine), "%s\n",line);
-                    write(currentCommand->conToClient, sendLine, strlen(sendLine));
-                   fclose(file);
+                    if(ifFileExists(filePath) == 1) {
+                        FILE * file = fopen(filePath, "r");
+                        for(int j=0;j<lineCounter+1;j++){
+                            if(!fgets(line,sizeof(line),file)){
+                                doneReadingFile =1;
+                            }
+                        }
+                        if(doneReadingFile != 1) {
+                            line[strlen(line) - 1] = 0;
+                            if(line[0] != 0 && strcmp(&line[0], "\r") != 0) {
+                                snprintf(sendLine, sizeof(sendLine), "%s\n",line);
+                                write(currentCommand->conToClient, sendLine, strlen(sendLine));
+                            }
+                        }
+                        fclose(file);
+                    }
                 }
                 lineCounter++;
             }
@@ -195,9 +205,11 @@ int readFile(struct Command * command) {
             int i = 1;
 
             while(fgets(line, sizeof(line), file)) {
-
-                snprintf(sendLine, sizeof(sendLine), "%s\n",line);
-                write(currentCommand->conToClient, sendLine, strlen(sendLine));
+                line[strlen(line) - 1] = 0;
+                if(line[0] != 0 && strcmp(&line[0], "\r") != 0) {
+                    snprintf(sendLine, sizeof(sendLine), "%s\n",line);
+                    write(currentCommand->conToClient, sendLine, strlen(sendLine));
+                }
             }
             fclose(file);
         }
@@ -322,9 +334,9 @@ void * processInputFromClient(void * ctc) {
                     write(connectionToClient, sendLine, strlen(sendLine));
                 }
             }
-            // READING
+                // READING
             else if(strcmp(commandType, "read") == 0) {
-                snprintf(sendLine, sizeof(sendLine), "-Reading File %s-\n", command.fileName);
+                snprintf(sendLine, sizeof(sendLine), "Reading File: %s\n", command.fileName);
                 write(connectionToClient, sendLine, strlen(sendLine));
 
                 if(readFile(&command) == 1) {
@@ -336,7 +348,7 @@ void * processInputFromClient(void * ctc) {
                 }
             }
 
-            // DELETING
+                // DELETING
             else if(strcmp(commandType, "delete") == 0) {
                 snprintf(sendLine, sizeof(sendLine), "Deleting file: %s\n", command.fileName);
                 write(connectionToClient, sendLine, strlen(sendLine));

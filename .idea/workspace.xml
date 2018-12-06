@@ -12,7 +12,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e81bcc7-e8cb-47ca-a6e7-2aa2309ba6dc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/main" beforeDir="false" afterPath="$PROJECT_DIR$/main" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -22,7 +21,6 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FUSProjectUsageTrigger">
     <session id="-431855848">
       <usages-collector id="statistics.lifecycle.project">
@@ -33,10 +31,10 @@
           <entry key="project.open.time.14" value="1" />
           <entry key="project.open.time.16" value="1" />
           <entry key="project.open.time.6" value="3" />
-          <entry key="project.open.time.7" value="9" />
+          <entry key="project.open.time.7" value="10" />
           <entry key="project.open.time.8" value="3" />
           <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="21" />
+          <entry key="project.opened" value="22" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -92,7 +90,7 @@
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
-              <caret line="185" column="32" selection-start-line="185" selection-start-column="32" selection-end-line="185" selection-end-column="32" />
+              <caret line="185" column="29" selection-start-line="185" selection-start-column="29" selection-end-line="185" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -123,8 +121,8 @@
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="676" />
-    <option name="width" value="697" />
+    <option name="x" value="675" />
+    <option name="width" value="698" />
     <option name="height" value="735" />
   </component>
   <component name="ProjectView">
@@ -132,7 +130,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -149,6 +146,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -218,6 +216,7 @@
       <workItem from="1543988591483" duration="5908000" />
       <workItem from="1544036373281" duration="6000" />
       <workItem from="1544052554969" duration="8011000" />
+      <workItem from="1544065788390" duration="66000" />
     </task>
     <task id="LOCAL-00001" summary="Made a function to get parameters from create command&#10;Started making a couple functions to get file contents input from the user, write these lines to the file in the corresponding partition, and return these filepaths to the createFileMapper function">
       <created>1541989797964</created>
@@ -251,13 +250,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81316000" />
+    <option name="totallyTimeSpent" value="81382000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.035552192" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.03557047" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -318,7 +317,7 @@
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
-          <caret line="185" column="32" selection-start-line="185" selection-start-column="32" selection-end-line="185" selection-end-column="32" />
+          <caret line="185" column="29" selection-start-line="185" selection-start-column="29" selection-end-line="185" selection-end-column="29" />
         </state>
       </provider>
     </entry>
