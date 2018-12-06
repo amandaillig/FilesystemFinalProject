@@ -140,6 +140,7 @@ int ifFileExists(char * filePath) {
 }
 int countLinesInFile (char * fileName){
     char line[BUF_SIZE];
+    fileName[strlen(fileName)-1]=0;
     FILE * file = fopen(fileName, "r");
     int i = 0;
 
@@ -171,7 +172,7 @@ int readFile(struct Command * command) {
             int lineCounter = 0;
             int readingFile = 0;
             while(readingFile != 1){
-                for(int i =0;i<noOfLines;i++){
+                for(int i =1;i<noOfLines+1;i++){
                     getFilePathFromMappingFile(fileName, i, filePath);
                     filePath[strlen(filePath) - 2] = 0;
                     FILE * file = fopen(filePath, "r");
@@ -180,9 +181,11 @@ int readFile(struct Command * command) {
                            readingFile =1;
                        }
                    }
+                    snprintf(sendLine, sizeof(sendLine), "%s\n",line);
+                    write(currentCommand->conToClient, sendLine, strlen(sendLine));
                    fclose(file);
-                   lineCounter++;
                 }
+                lineCounter++;
             }
         } else {
             // Read from file in only one partition
