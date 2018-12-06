@@ -293,7 +293,7 @@ void * processInputFromClient(void * ctc) {
     char fileName[BUF_SIZE];
     int numOfPartitions = 0;
 
-    snprintf(sendLine, sizeof(sendLine), "Input either Create, Read, or Delete Command.  Type 'exit' to leave server or 'stop server' to stop the server.\n");
+    snprintf(sendLine, sizeof(sendLine), "Input either create, read, or delete command.  Type 'exit' to leave server or 'stop server' to stop the server.\n");
     write(connectionToClient, sendLine, strlen(sendLine));
 
     // Get first command
