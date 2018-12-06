@@ -1,0 +1,3 @@
+./disk1/poop.txt
+./disk2/poop.txt
+./disk3/poop.txt

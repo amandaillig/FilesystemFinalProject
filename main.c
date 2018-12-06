@@ -57,8 +57,8 @@ void createPartitionFoldersAndMappingFile(char fileName[], int numOfPartitions) 
     char * filePath;
 
     for(i = 1; i <= num; i++) {
-        char diskPath[BUF_SIZE] = ".\\disk";
-        snprintf(&diskPath[strlen(diskPath)],sizeof(i),"%d\\",i);
+        char diskPath[BUF_SIZE] = "./disk";
+        snprintf(&diskPath[strlen(diskPath)],sizeof(i),"%d/",i);
 
         int result = mkdir(diskPath, 0777);
 
@@ -150,17 +150,31 @@ int readFile(struct Command * command) {
     int * partitionNo = currentCommand->partition;
     int partitionCounter = 1;
 
-    char * filePath = (char *) malloc(sizeof(char) * BUF_SIZE);
+    if(ifFileExists(fileName)) {
+        char filePath[BUF_SIZE];
+        char sendLine[BUF_SIZE];
+        if (*partitionNo == -1) {
+            // Read whole file
+        } else {
+            // Read from file in only one partition
+            getFilePathFromMappingFile(fileName, *partitionNo, filePath);
+            char line[BUF_SIZE];
+            FILE * file = fopen(filePath, "r");
+            int i = 1;
 
-    if(*partitionNo == -1) {
-        // Read whole file
-    } else {
-        // Read from file in only one partition
-        getFilePathFromMappingFile(fileName, *partitionNo, filePath);
+            while(fgets(line, sizeof(line), file)) {
+                line[strlen(line) - 2] = 0;
+
+                snprintf(sendLine, sizeof(sendLine), "%s\n",line);
+                write(currentCommand->conToClient, sendLine, strlen(sendLine));
+            }
+            fclose(file);
+        }
+        //free(filePath);
+        return 1;
+    }else{
+        return -1;
     }
-    free(filePath);
-
-    return 1;
 }
 
 // DELETE COMMAND
