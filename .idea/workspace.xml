@@ -12,6 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5e81bcc7-e8cb-47ca-a6e7-2aa2309ba6dc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main" beforeDir="false" afterPath="$PROJECT_DIR$/main" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -75,12 +77,12 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="c" value="140" />
+          <entry key="c" value="534" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="ObjectiveC" value="140" />
+          <entry key="ObjectiveC" value="534" />
         </counts>
       </usages-collector>
     </session>
@@ -90,8 +92,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="157" column="16" lean-forward="true" selection-start-line="157" selection-start-column="16" selection-end-line="157" selection-end-column="16" />
+            <state relative-caret-position="357">
+              <caret line="182" column="32" selection-start-line="182" selection-start-column="32" selection-end-line="182" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -216,7 +218,7 @@
       <workItem from="1543984031596" duration="4405000" />
       <workItem from="1543988591483" duration="5908000" />
       <workItem from="1544036373281" duration="6000" />
-      <workItem from="1544052554969" duration="4049000" />
+      <workItem from="1544052554969" duration="6766000" />
     </task>
     <task id="LOCAL-00001" summary="Made a function to get parameters from create command&#10;Started making a couple functions to get file contents input from the user, write these lines to the file in the corresponding partition, and return these filepaths to the createFileMapper function">
       <created>1541989797964</created>
@@ -250,7 +252,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="77354000" />
+    <option name="totallyTimeSpent" value="80071000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -316,8 +318,8 @@
     <entry file="file://C:/cygwin64/usr/src/debug/cygwin-2.11.1-1/winsup/cygwin/fhandler_console.cc" />
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="157" column="16" lean-forward="true" selection-start-line="157" selection-start-column="16" selection-end-line="157" selection-end-column="16" />
+        <state relative-caret-position="357">
+          <caret line="182" column="32" selection-start-line="182" selection-start-column="32" selection-end-line="182" selection-end-column="32" />
         </state>
       </provider>
     </entry>

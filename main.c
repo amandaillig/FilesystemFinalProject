@@ -138,6 +138,17 @@ int ifFileExists(char * filePath) {
         return -1;
     }
 }
+int countLinesInFile (char * fileName){
+    char line[BUF_SIZE];
+    FILE * file = fopen(fileName, "r");
+    int i = 0;
+
+    while(fgets(line, sizeof(line), file)) {
+        i++;
+    }
+    fclose(file);
+    return i;
+}
 
 int readFile(struct Command * command) {
     // We need to get the mapping file
@@ -149,28 +160,44 @@ int readFile(struct Command * command) {
     char * fileName = currentCommand->fileName;
     int * partitionNo = currentCommand->partition;
     int partitionCounter = 1;
+    char line[BUF_SIZE];
 
     if(ifFileExists(fileName)) {
         char filePath[BUF_SIZE];
         char sendLine[BUF_SIZE];
         if (*partitionNo == -1) {
             // Read whole file
+            int noOfLines = countLinesInFile(fileName);
+            int lineCounter = 0;
+            int readingFile = 0;
+            while(readingFile != 1){
+                for(int i =0;i<noOfLines;i++){
+                    getFilePathFromMappingFile(fileName, i, filePath);
+                    filePath[strlen(filePath) - 2] = 0;
+                    FILE * file = fopen(filePath, "r");
+                   for(int j=0;j<lineCounter+1;j++){
+                       if(!fgets(line,sizeof(line),file)){
+                           readingFile =1;
+                       }
+                   }
+                   fclose(file);
+                   lineCounter++;
+                }
+            }
         } else {
             // Read from file in only one partition
             getFilePathFromMappingFile(fileName, *partitionNo, filePath);
-            char line[BUF_SIZE];
+            filePath[strlen(filePath) - 2] = 0;
             FILE * file = fopen(filePath, "r");
             int i = 1;
 
             while(fgets(line, sizeof(line), file)) {
-                line[strlen(line) - 2] = 0;
 
                 snprintf(sendLine, sizeof(sendLine), "%s\n",line);
                 write(currentCommand->conToClient, sendLine, strlen(sendLine));
             }
             fclose(file);
         }
-        //free(filePath);
         return 1;
     }else{
         return -1;
